@@ -58,7 +58,7 @@ Build a **web-based dashboard** that:
 | Frontend     | React.js, Tailwind CSS, Leaflet.js, Recharts |
 | Backend      | Node.js, Express.js                      |
 | Database     | MongoDB                                  |
-| ML Models    | Python (Scikit-learn, Flask API), optional TensorFlow.js |
+| ML Models    | Python (Scikit-learn, Flask API),        |
 | Sensors      | Simulated data (CSV/Generator)           |
 | APIs         | OpenChargeMap, Google Maps               |
 | Alerts       | Twilio, Nodemailer                       |
@@ -67,26 +67,15 @@ Build a **web-based dashboard** that:
 
 ## 🧠 ML Models Used
 
-- **Accident Detection**: Random Forest / SVM
-- **Battery Estimation**: Linear Regression
+- **Accident Detection**: Random Forest 
+- **Battery Estimation**: Random Forest
 - **Component Failure Prediction**: Logistic Regression
 
 Inputs include: accelerometer, speed, temperature, GPS, usage time, etc.
 
 ---
 
-## 📆 Implementation Timeline
 
-| Phase | Task                                      | Duration |
-|-------|-------------------------------------------|----------|
-| 1     | Sensor data simulation                    | 1 week   |
-| 2     | ML model training                         | 1 week   |
-| 3     | Backend & Flask API integration           | 1 week   |
-| 4     | Frontend dashboard + data visualization   | 1 week   |
-| 5     | Alert system integration & testing        | 1 week   |
-| 6     | Final demo + polish                       | 2-3 days |
-
----
 
 ## 🎯 Expected Outcomes
 
@@ -106,26 +95,3 @@ Inputs include: accelerometer, speed, temperature, GPS, usage time, etc.
 
 ---
 
-## 📸 Screenshots
-
-> *(Include screenshots/gifs of dashboard, alert examples, and route planner here)*
-
----
-
-## 🤝 Contributions
-
-Open to contributions. Feel free to fork the repo and submit pull requests for enhancements or bug fixes.
-
----
-
-## 📜 License
-
-This project is licensed under the MIT License. See `LICENSE` for more details.
-
----
-
-## 🙋‍♂️ Contact
-
-For queries or collaboration:  
-**Your Name** – [your.email@example.com]  
-**LinkedIn** – [linkedin.com/in/your-profile]  
