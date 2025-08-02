@@ -1,11 +1,17 @@
 from flask import Flask, request, jsonify
 import joblib
 import pandas as pd
+import traceback
 
 app = Flask(__name__)
 
 # Load the saved model
-model = joblib.load("maintenance_model.pkl")
+try:
+    model = joblib.load("maintenance_model.pkl")
+    print("✅ Maintenance model loaded successfully.")
+except Exception as e:
+    print("❌ Failed to load the maintenance model:", e)
+    exit(1)
 
 @app.route("/")
 def home():
@@ -15,9 +21,16 @@ def home():
 def predict_failure():
     try:
         data = request.get_json()
+        print("\n📥 Incoming Request Data:", data)
 
         # Expected input keys
-        features = ['engine_temp', 'brake_status', 'battery_level', 'fuel_level']
+        expected_keys = ['engine_temp', 'brake_status', 'battery_level', 'fuel_level']
+        
+        # Validate keys
+        for key in expected_keys:
+            if key not in data:
+                print(f"⚠️ Missing field: {key}")
+                return jsonify({"error": f"Missing field: {key}"}), 400
 
         # Extract in correct order
         input_data = [[
@@ -26,21 +39,26 @@ def predict_failure():
             data['battery_level'],
             data['fuel_level']
         ]]
+        print("📊 Prepared Input Array:", input_data)
 
         # Create a DataFrame with column names
-        df_input = pd.DataFrame(input_data, columns=features)
+        df_input = pd.DataFrame(input_data, columns=expected_keys)
+        print("🧾 Input DataFrame:\n", df_input)
 
         # Predict
-        prediction = model.predict(df_input)
+        prediction = model.predict(df_input)[0]
+        print("🔮 Prediction Output:", prediction)
 
         # Return result
         return jsonify({
-            "vehicle_failure": int(prediction[0]),
-            "message": "🔧 Failure expected!" if prediction[0] else "✅ Vehicle is healthy!"
+            "vehicle_failure": int(prediction),
+            "message": "🔧 Failure expected!" if prediction else "✅ Vehicle is healthy!"
         })
 
     except Exception as e:
-        return jsonify({"error": str(e)})
+        print("❌ Error in /predict_maintenance:")
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
